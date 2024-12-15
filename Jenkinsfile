@@ -8,23 +8,23 @@ pipeline {
         }
         stage('Build the Docker image') {
             steps {
-                sh 'sudo docker build -t ballimage /root/project/workspace/k8s-game'
-                sh 'sudo docker tag ballimage kmbharathi97/ballimage:latest'
-                sh 'sudo docker tag ballimage kmbharathi97/ballimage:${BUILD_NUMBER}'
+                sh 'sudo docker build -t mazeimage /root/project/workspace/k8s-game'
+                sh 'sudo docker tag mazeimage kmbharathi97/mazeimage:latest'
+                sh 'sudo docker tag mazeimage kmbharathi97/mazeimage:${BUILD_NUMBER}'
             }
         }
         stage('Trivy Vulnerability Scan') {
             steps {
                 script {
-                    sh 'sudo trivy image kmbharathi97/ballimage:latest'
-                    sh 'sudo trivy image kmbharathi97/ballimage:${BUILD_NUMBER}'
+                    sh 'sudo trivy image kmbharathi97/mazeimage:latest'
+                    sh 'sudo trivy image kmbharathi97/mazeimage:${BUILD_NUMBER}'
                 }
             }
         }
         stage('Push the Docker image') {
             steps {
-                sh 'sudo docker image push kmbharathi97/ballimage:latest'
-                sh 'sudo docker image push kmbharathi97/ballimage:${BUILD_NUMBER}'
+                sh 'sudo docker image push kmbharathi97/mazeimage:latest'
+                sh 'sudo docker image push kmbharathi97/mazeimage:${BUILD_NUMBER}'
             }
         }
         stage('Deploy on Kubernetes') {
